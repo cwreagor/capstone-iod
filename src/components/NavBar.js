@@ -31,6 +31,7 @@ export default function NavBar() {
               <Link to="/history" onClick={() => setOpen(false)}>History</Link>
               <Link to="/math" onClick={() => setOpen(false)}>Math</Link>
               <Link to="/literature" onClick={() => setOpen(false)}>Literature</Link>
+              <Link to="/trivia" onClick={() => setOpen(false)}>Trivia</Link>
             </div>
           )
       }

@@ -6,7 +6,7 @@ const mathematicsCards = [
   { front: "Who invented calculus?", back: "Isaac Newton" },
   { front: "What is the square root of 144?", back: "12" },
   { front: "What is an equilateral triangle?", back: "A triangle with all three sides of equal length" },
-  { front: "Which shape has 10 sides?", back: "Decagon" },
+  { front: "What shape has 10 sides?", back: "Decagon" },
 ];
 
 export default function Mathematics() {

@@ -7,10 +7,12 @@ import Mythology from "./pages/Mythology";
 import History from "./pages/History";
 import Mathematics from "./pages/Mathematics";
 import Literature from "./pages/Literature";
+import RandomTrivia from "./pages/RandomTrivia";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -25,7 +27,10 @@ export default function App() {
         <Route path="/math" element={<Mathematics />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/trivia" element={<RandomTrivia />} />
       </Routes>
+      
+      <Footer />
     </Router>
   );
 }

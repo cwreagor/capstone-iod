@@ -8,7 +8,6 @@ export default function Home() {
 
             <p>Select a topic from the menu to begin studying!</p>
 
-      {/* Image Below Title */}
       <img 
         src={flashcardsImg} 
         alt="Flashcards" 
