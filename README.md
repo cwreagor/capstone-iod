@@ -1,70 +1,140 @@
-# Getting Started with Create React App
+### Study Zone — Interactive Flashcard Learning App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Study Zone is a React-based flashcard application where users can create an account, log in, and study material across multiple subjects. It includes built-in flashcards for Science, Mythology, History, Math, Literature, plus a Random Trivia page.
+Users can also create their own flashcards on every subject page.
 
-## Available Scripts
+### Features
+### User Authentication
 
-In the project directory, you can run:
+Sign Up with email + password validation
 
-### `npm start`
+Login with lockout after 3 failed attempts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Logout button in the navigation menu
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Sessions persist using LocalStorage
 
-### `npm test`
+### Flashcards
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Subject pages each include a set of flashcards
 
-### `npm run build`
+Cards flip to reveal answers
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Users can create their own custom flashcards
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Custom cards persist with LocalStorage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Subjects Included
 
-### `npm run eject`
+Science
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Mythology
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+History
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Math
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Literature
 
-## Learn More
+Random Trivia
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### UI & Experience
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Mobile-friendly hamburger navigation bar
 
-### Code Splitting
+GIF logo in the navbar linking back to Home
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Sticky navbar
 
-### Analyzing the Bundle Size
+Simple, clean interface
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Tech Stack
 
-### Making a Progressive Web App
+React – Frontend framework
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+React Router – Page navigation
 
-### Advanced Configuration
+LocalStorage – Save accounts + custom flashcards
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+AuthContext – Handles signup, login, logout
 
-### Deployment
+CSS – Custom styling
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Getting Started
+1. Install dependencies
+### npm install
 
-### `npm run build` fails to minify
+2. Start the development server
+### npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+Visit your app at:
+
+### http://localhost:3000
+
+### Project Structure
+src/
+  components/
+    Flashcard.jsx
+    FlashcardList.jsx
+    Footer.jsx
+    NavBar.jsx
+  pages/
+    Home.jsx
+    Login.jsx
+    SignUp.jsx
+    Science.jsx
+    Mythology.jsx
+    History.jsx
+    Mathematics.jsx
+    Literature.jsx
+    RandomTrivia.jsx
+  context/
+    AuthContext.jsx
+  assets/
+    studyzone.gif
+  App.jsx
+  index.jsx
+  style.css
+
+### Authentication Overview
+
+Accounts are saved in localStorage.users
+
+Logging in checks email + password
+
+Logged in user stored in localStorage.loggedInUser
+
+NavBar updates to show Logout when logged in
+
+User stays logged in on page refresh
+
+### Flashcard System
+
+Every subject page allows users to:
+
+View a list of built-in flashcards
+
+Flip cards for answers
+
+Create new custom flashcards
+
+Store these custom cards in LocalStorage
+
+Render all cards dynamically
+
+### Future Improvements
+
+Dark mode
+
+Ability to delete custom flashcards
+
+Cloud storage for user accounts + flashcards
+
+User profiles with progress tracking
+
+Search function for flashcards
+
+### License
+
+This project is for educational purposes only.
