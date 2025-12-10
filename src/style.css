@@ -1,3 +1,26 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -71,6 +94,25 @@ body {
   color: #ff66c4 !important;
   text-shadow: 0 0 12px #ff66c4;
   transform: scale(1.1);
+}
+
+.subjects-toggle {
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.subjects-dropdown {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.subjects-toggle {
+  color: #ffcc00;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 /* Flashcard Container */

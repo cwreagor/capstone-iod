@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Flashcard({ front, back, onDelete }) {
+export default function Flashcard({ front, back, onDelete, onEdit }) {
   const [flipped, setFlipped] = useState(false);
 
   return (
@@ -13,9 +13,10 @@ export default function Flashcard({ front, back, onDelete }) {
         <div className="back">{back}</div>
       </div>
 
-      <button className="delete-btn" onClick={onDelete}>
-        ✖
-      </button>
+      <div className="button-row">
+        <button className="delete-btn" onClick={onDelete}>✖</button>
+        <button className="edit-btn" onClick={onEdit}>✎</button>
+      </div>
     </div>
   );
 }

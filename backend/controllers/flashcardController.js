@@ -23,22 +23,33 @@ async function getFlashcards(req, res) {
 }
 
 async function deleteFlashcard(req, res) {
-  const { email, subject, index } = req.params;
-
   try {
-    const cards = await Flashcard.find({ userId: email, subject });
-
-    if (index < 0 || index >= cards.length) {
-      return res.status(400).json({ error: "Invalid index" });
-    }
-
-    await Flashcard.findByIdAndDelete(cards[index]._id);
-
-    res.status(200).json({ message: "Deleted" });
-
+    await Flashcard.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Flashcard deleted" });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 }
 
-module.exports = { saveFlashcard, getFlashcards, deleteFlashcard };
+async function updateFlashcard(req, res) {
+  try {
+    const { front, back } = req.body;
+
+    const updated = await Flashcard.findByIdAndUpdate(
+      req.params.id,
+      { front, back },
+      { new: true }
+    );
+
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+}
+
+module.exports = {
+  saveFlashcard,
+  getFlashcards,
+  deleteFlashcard,
+  updateFlashcard
+};

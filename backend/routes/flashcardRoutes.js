@@ -4,13 +4,13 @@ const router = express.Router();
 const {
   saveFlashcard,
   getFlashcards,
-  deleteFlashcard
+  deleteFlashcard,
+  updateFlashcard
 } = require("../controllers/flashcardController");
 
 router.post("/", saveFlashcard);
-
 router.get("/:email/:subject", getFlashcards);
-
-router.delete("/:email/:subject/:index", deleteFlashcard);
+router.delete("/:id", deleteFlashcard);
+router.put("/:id", updateFlashcard);
 
 module.exports = router;

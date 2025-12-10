@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 const API_URL = "http://localhost:5001";
@@ -9,7 +10,8 @@ export function AuthProvider({ children }) {
     return stored ? JSON.parse(stored) : null;
   });
 
-  // SIGN UP
+  const navigate = useNavigate();
+
   async function signup(email, password) {
     const res = await fetch(`${API_URL}/auth/signup`, {
       method: "POST",
@@ -25,7 +27,6 @@ export function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(newUser));
   }
 
-  // LOGIN
   async function login(email, password) {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
@@ -41,10 +42,10 @@ export function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(newUser));
   }
 
-  // LOGOUT
   function logout() {
     setUser(null);
     localStorage.removeItem("user");
+    navigate("/");
   }
 
   return (

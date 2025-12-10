@@ -6,6 +6,7 @@ import { useAuth } from "../controllers/AuthContext";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
+  const [subjectsOpen, setSubjectsOpen] = useState(false);
   const { user, logout } = useAuth();
 
   return (
@@ -26,7 +27,7 @@ export default function NavBar() {
 
       {open && (
         <div className="nav-menu">
-          
+
           {!user && (
             <>
               <Link to="/login" onClick={() => setOpen(false)}>Login</Link>
@@ -46,12 +47,25 @@ export default function NavBar() {
             </button>
           )}
 
-          <Link to="/science" onClick={() => setOpen(false)}>Science</Link>
-          <Link to="/mythology" onClick={() => setOpen(false)}>Mythology</Link>
-          <Link to="/history" onClick={() => setOpen(false)}>History</Link>
-          <Link to="/math" onClick={() => setOpen(false)}>Math</Link>
-          <Link to="/literature" onClick={() => setOpen(false)}>Literature</Link>
-          <Link to="/trivia" onClick={() => setOpen(false)}>Trivia</Link>
+          {/* SUBJECTS DROPDOWN */}
+          <div
+            className="subjects-toggle"
+            onClick={() => setSubjectsOpen(!subjectsOpen)}
+          >
+            Subjects {subjectsOpen ? "▲" : "▼"}
+          </div>
+
+          {subjectsOpen && (
+            <div className="subjects-dropdown">
+              <Link to="/science" onClick={() => setOpen(false)}>Science</Link>
+              <Link to="/mythology" onClick={() => setOpen(false)}>Mythology</Link>
+              <Link to="/history" onClick={() => setOpen(false)}>History</Link>
+              <Link to="/math" onClick={() => setOpen(false)}>Math</Link>
+              <Link to="/literature" onClick={() => setOpen(false)}>Literature</Link>
+              <Link to="/trivia" onClick={() => setOpen(false)}>Trivia</Link>
+            </div>
+          )}
+
         </div>
       )}
     </nav>

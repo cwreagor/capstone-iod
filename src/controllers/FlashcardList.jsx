@@ -12,24 +12,32 @@ export default function FlashcardList({ subject, initialCards = [] }) {
   const [showGuestMessage, setShowGuestMessage] = useState(false);
 
   async function loadCards() {
+    // LOGGED OUT → use default cards for ALL subjects
     if (!user) {
       setCards(initialCards);
       return;
     }
 
+    // LOGGED IN → fetch user-saved cards
     try {
       const res = await fetch(
         `${API_URL}/flashcards/${user.email}/${subject}`,
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          headers: { Authorization: `Bearer ${user.token}` },
         }
       );
 
       const saved = await res.json();
 
-      setCards([...(initialCards || []), ...saved]);
+      // ⭐ SPECIAL CASE: TRIVIA PAGE
+      if (subject.toLowerCase() === "trivia") {
+        // KEEP trivia default card + show saved trivia cards
+        setCards([...(initialCards || []), ...saved]);
+      } else {
+        // ⭐ ALL OTHER SUBJECTS — DEFAULT CARDS REMOVED
+        setCards(saved);
+      }
+
     } catch (err) {
       console.error("Error loading flashcards:", err);
     }
@@ -39,21 +47,23 @@ export default function FlashcardList({ subject, initialCards = [] }) {
     loadCards();
   }, [user, subject, initialCards]);
 
+
+  // ADD CARD
   const addCard = async (e) => {
     e.preventDefault();
     const front = e.target.front.value.trim();
     const back = e.target.back.value.trim();
     if (!front || !back) return;
 
-    const newCard = { front, back };
-
+    // LOGGED OUT → local only
     if (!user) {
-      setCards((prev) => [...prev, newCard]);
+      setCards((prev) => [...prev, { front, back }]);
       setShowGuestMessage(true);
       e.target.reset();
       return;
     }
 
+    // LOGGED IN
     try {
       await fetch(`${API_URL}/flashcards`, {
         method: "POST",
@@ -69,8 +79,7 @@ export default function FlashcardList({ subject, initialCards = [] }) {
         }),
       });
 
-      await loadCards();
-
+      loadCards();
     } catch (err) {
       console.error("Error saving flashcard:", err);
     }
@@ -78,14 +87,18 @@ export default function FlashcardList({ subject, initialCards = [] }) {
     e.target.reset();
   };
 
-  const deleteCard = async (index) => {
+
+  // DELETE CARD
+  const deleteCard = async (id, index) => {
     const builtInCount = initialCards.length;
 
-    if (index < builtInCount) {
-      alert("Default flashcards cannot be deleted.");
+    // BLOCK DELETION OF DEFAULT CARD — ONLY ON TRIVIA
+    if (subject.toLowerCase() === "trivia" && index < builtInCount) {
+      alert("Default trivia card cannot be deleted.");
       return;
     }
 
+    // LOGGED OUT → delete locally
     if (!user) {
       const updated = [...cards];
       updated.splice(index, 1);
@@ -93,14 +106,11 @@ export default function FlashcardList({ subject, initialCards = [] }) {
       return;
     }
 
+    // LOGGED IN → delete DB card
     try {
-      const userIndex = index - builtInCount;
-
-      await fetch(`${API_URL}/flashcards/${user.email}/${subject}/${userIndex}`, {
+      await fetch(`${API_URL}/flashcards/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+        headers: { Authorization: `Bearer ${user.token}` },
       });
 
       loadCards();
@@ -109,15 +119,47 @@ export default function FlashcardList({ subject, initialCards = [] }) {
     }
   };
 
+
+  // EDIT CARD
+  const editCard = async (id, index) => {
+    const builtInCount = initialCards.length;
+
+    // BLOCK EDITING DEFAULT TRIVIA CARD
+    if (subject.toLowerCase() === "trivia" && index < builtInCount) {
+      alert("Default trivia card cannot be edited.");
+      return;
+    }
+
+    const newFront = prompt("Enter new front text:");
+    const newBack = prompt("Enter new back text:");
+    if (!newFront || !newBack) return;
+
+    try {
+      await fetch(`${API_URL}/flashcards/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ front: newFront, back: newBack }),
+      });
+
+      loadCards();
+    } catch (err) {
+      console.error("Error editing flashcard:", err);
+    }
+  };
+
+
   return (
     <div className="flashcard-container">
-
       {cards.map((card, index) => (
         <Flashcard
           key={index}
           front={card.front}
           back={card.back}
-          onDelete={() => deleteCard(index)}
+          onDelete={() => deleteCard(card._id || card.id, index)}
+          onEdit={() => editCard(card._id || card.id, index)}
         />
       ))}
 

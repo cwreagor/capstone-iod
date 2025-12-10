@@ -127,8 +127,6 @@ Render all cards dynamically
 
 Dark mode
 
-Ability to delete custom flashcards
-
 Cloud storage for user accounts + flashcards
 
 User profiles with progress tracking
