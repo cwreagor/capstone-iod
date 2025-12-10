@@ -47,7 +47,6 @@ export default function NavBar() {
             </button>
           )}
 
-          {/* SUBJECTS DROPDOWN */}
           <div
             className="subjects-toggle"
             onClick={() => setSubjectsOpen(!subjectsOpen)}

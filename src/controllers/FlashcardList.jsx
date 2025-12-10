@@ -12,13 +12,11 @@ export default function FlashcardList({ subject, initialCards = [] }) {
   const [showGuestMessage, setShowGuestMessage] = useState(false);
 
   async function loadCards() {
-    // LOGGED OUT → use default cards for ALL subjects
     if (!user) {
       setCards(initialCards);
       return;
     }
 
-    // LOGGED IN → fetch user-saved cards
     try {
       const res = await fetch(
         `${API_URL}/flashcards/${user.email}/${subject}`,
@@ -29,12 +27,9 @@ export default function FlashcardList({ subject, initialCards = [] }) {
 
       const saved = await res.json();
 
-      // ⭐ SPECIAL CASE: TRIVIA PAGE
       if (subject.toLowerCase() === "trivia") {
-        // KEEP trivia default card + show saved trivia cards
         setCards([...(initialCards || []), ...saved]);
       } else {
-        // ⭐ ALL OTHER SUBJECTS — DEFAULT CARDS REMOVED
         setCards(saved);
       }
 
@@ -48,14 +43,12 @@ export default function FlashcardList({ subject, initialCards = [] }) {
   }, [user, subject, initialCards]);
 
 
-  // ADD CARD
   const addCard = async (e) => {
     e.preventDefault();
     const front = e.target.front.value.trim();
     const back = e.target.back.value.trim();
     if (!front || !back) return;
 
-    // LOGGED OUT → local only
     if (!user) {
       setCards((prev) => [...prev, { front, back }]);
       setShowGuestMessage(true);
@@ -63,7 +56,6 @@ export default function FlashcardList({ subject, initialCards = [] }) {
       return;
     }
 
-    // LOGGED IN
     try {
       await fetch(`${API_URL}/flashcards`, {
         method: "POST",
@@ -88,17 +80,14 @@ export default function FlashcardList({ subject, initialCards = [] }) {
   };
 
 
-  // DELETE CARD
   const deleteCard = async (id, index) => {
     const builtInCount = initialCards.length;
 
-    // BLOCK DELETION OF DEFAULT CARD — ONLY ON TRIVIA
     if (subject.toLowerCase() === "trivia" && index < builtInCount) {
       alert("Default trivia card cannot be deleted.");
       return;
     }
 
-    // LOGGED OUT → delete locally
     if (!user) {
       const updated = [...cards];
       updated.splice(index, 1);
@@ -106,7 +95,6 @@ export default function FlashcardList({ subject, initialCards = [] }) {
       return;
     }
 
-    // LOGGED IN → delete DB card
     try {
       await fetch(`${API_URL}/flashcards/${id}`, {
         method: "DELETE",
@@ -120,11 +108,9 @@ export default function FlashcardList({ subject, initialCards = [] }) {
   };
 
 
-  // EDIT CARD
   const editCard = async (id, index) => {
     const builtInCount = initialCards.length;
 
-    // BLOCK EDITING DEFAULT TRIVIA CARD
     if (subject.toLowerCase() === "trivia" && index < builtInCount) {
       alert("Default trivia card cannot be edited.");
       return;

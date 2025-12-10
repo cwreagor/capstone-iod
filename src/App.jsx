@@ -19,7 +19,6 @@ export default function App() {
     <div className="app-wrapper">
       <NavBar />
 
-      {/* THIS WRAPS YOUR PAGE CONTENT AND MAKES IT EXPAND */}
       <div className="page-content">
         <Routes>
           <Route path="/" element={<Home />} />
