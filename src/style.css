@@ -348,7 +348,7 @@ h1, .home h1 {
 }
 
 .nav-gif {
-  height: 50px;     /* adjust size as needed */
+  height: 50px;
   width: auto;
   border-radius: 8px;
   cursor: pointer;
